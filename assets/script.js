@@ -54,6 +54,22 @@ var startBtn = document.querySelector("#start-btn");
 var left = document.querySelector("#left");
 var right = document.querySelector("#right");
 
+// Utility to shuffle order of arrays.
+function shuffle(array) {
+    var correctI = 0;
+
+    for (i in array) {
+      var randomI = Math.floor(Math.random() * array.length);
+
+      [array[i], array[randomI]] = [array[randomI], array[i]];
+
+      // When shuffling answers, keep track of the correct one's index.
+      if (i == correctI) correctI = randomI;
+      else if (randomI == correctI) correctI = i;
+    }
+    return array[correctI];
+  }
+
 function renderQuiz() {
   // Remove homepage.
   landing.style.display = "none";
