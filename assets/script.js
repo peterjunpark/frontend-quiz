@@ -51,8 +51,10 @@ var questionsList = [
 
 var landing = document.querySelector("#landing");
 var startBtn = document.querySelector("#start-btn");
-var left = document.querySelector("#left");
-var right = document.querySelector("#right");
+var questionH3 = document.querySelector("#question");
+var questionNumberH3 = document.querySelector("#question-number")
+var questionTypeImg = document.querySelector("#question-type");
+
 
 // Utility to shuffle order of arrays. Use to shuffle questionsList array and answers array.
 function shuffle(array) {
@@ -64,24 +66,30 @@ function shuffle(array) {
     [array[i], array[randomI]] = [array[randomI], array[i]];
 
     // When shuffling answers, keep track of the correct answer's index.
-    i == correctI ? correctI = randomI : correctI = i;
+    i == correctI ? (correctI = randomI) : (correctI = i);
   }
   return array[correctI];
 }
 
 function startQuiz() {
-  var currentQuestion = 1;
+  var currentQuestion = 0;
   // Remove homepage.
   landing.style.display = "none";
 
+  shuffle(questionsList);
+
   function populateQuiz() {
+    var question = questionsList[currentQuestion].question;
     var questionType = questionsList[currentQuestion].category;
 
-    shuffle(questionsList);
-    // Questions
-    document.querySelector("#question-type").setAttribute("src", `./assets/images/${questionType}.svg`)
-    document.querySelector("#question-number").innerHTML = "Question Number One";
-    document.querySelector("#question").innerHTML = "Question Text One";
+    console.log(questionsList);
+    console.log(questionType);
+    // Populate question.
+    questionH3.innerHTML = "Question Text One";
+    questionNumberH3.innerHTML = "Question " + (currentQuestion + 1);
+    questionTypeImg.setAttribute("src", `./assets/images/${questionType}.svg`);
+
+
   }
 
   populateQuiz();
