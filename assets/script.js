@@ -4,31 +4,55 @@ var questionsList = [
     question: "Which of these is a class selector?",
     category: "css",
     answers: [
-      "<code>.container</code>",
-      "<code>#container</code>",
-      "<code>container</code>",
-      "<code>(container)</code>",
+      ".container",
+      "#container",
+      "container</code>",
+      "(container)</code>",
+    ],
+  },
+  {
+    question:
+      "What are the parts of the box model from innermost to outermost?",
+    category: "css",
+    answers: [
+      "content, padding, border, margin",
+      "content, margin, border, padding",
+      "content, padding, margin, border",
+      "content, border, padding, margin",
     ],
   },
   {
     question: "What attribute should you use to open a link in a new tab?",
     category: "html",
     answers: [
-      '<code>target="_blank"</code>',
-      '<code>target="blank_"</code>',
-      '<code>target="_tab"</code>',
-      '<code>target="new-tab"</code>',
+      'target="_blank"',
+      'target="blank_"',
+      'target="_tab"',
+      'target="new-tab"',
     ],
   },
   {
-    question: "Which of these is not a typical way of defining a function?",
-    category: "js",
+    question:
+      "Which attribute specifies descriptive text for an image used if the image cannot be displayed?",
+    category: "html",
     answers: [
-      "function inversion",
-      "function expression",
-      "function declaration",
-      "arrow function",
+      "alt",
+      "href",
+      "id",
+      "name",
     ],
+  },
+  {
+    question:
+      "Which of the following symbols represents strict equality?",
+    category: "js",
+    answers: ["===", "==", "="],
+  },
+  {
+    question:
+      "The Document Object Model is a web API baked into modern browsers that represents the structure of an HTML document as a tree?",
+    category: "js",
+    answers: ["True", "False"],
   },
   {
     question:
@@ -38,26 +62,37 @@ var questionsList = [
   },
   {
     question:
-      "What command can you use to create a new branch and switch to it?",
+      "What command can you use to switch to another branch (and create it if it doesn't exist)?",
     category: "git",
     answers: [
-      '<code>git checkout -b "newbranch"</code>',
-      '<code>git add -b "newbranch"</code>',
-      '<code>git branch -c "newbranch"</code>',
-      '<code>git new -b "newbranch"</code>',
+      'git checkout -b "..."',
+      'git add -b "..."',
+      '<code>git branch -c "..."',
+      '<code>git new -b "..."',
+    ],
+  },
+  {
+    question: "What command lets you see a repository's commit history?",
+    category: "git",
+    answers: [
+      "git log",
+      "git history",
+      "git branch",
+      "git status",
     ],
   },
 ];
-
 var landing = document.querySelector("#landing");
 var startBtn = document.querySelector("#start-btn");
-var score = document.querySelector("#score");
 var scoreboardBtn = document.querySelector("#scoreboard-btn");
+var score = document.querySelector("#score");
 var timer = document.querySelector("#timer");
 var questionH3 = document.querySelector("#question");
 var questionNumberH3 = document.querySelector("#question-number");
 var questionTypeImg = document.querySelector("#question-type");
+var questionContainer = document.querySelector("#question-container");
 var answersContainer = document.querySelector("#answers-container");
+var scoreboardContainer = document.querySelector("#scoreboard-container");
 
 // Utility to shuffle order of arrays. Use to shuffle questionsList array and answers array.
 function shuffle(array) {
@@ -82,19 +117,21 @@ function startQuiz() {
   var time = 60;
 
   landing.style.display = "none";
+  questionContainer.classList.replace("hide", "flex");
+  answersContainer.classList.replace("hide", "flex");
 
   shuffle(questionsList);
 
   function startTimer() {
     var timerInterval = setInterval(() => {
-      timer.innerHTML = time.toFixed(2);
+      timer.innerHTML = "Time remaining: " + time.toFixed(2);
       time -= 0.01;
 
       if (time < 0) {
         clearInterval(timerInterval);
         clearQuiz();
       }
-    })
+    });
   }
 
   function populateQuiz() {
@@ -103,7 +140,9 @@ function startQuiz() {
     var answers = questionsList[currentQuestion].answers;
 
     clearQuiz();
-    score.innerHTML = points;
+    score.innerHTML = "Score: " + points;
+    score.style.color = "";
+    timer.style.color = "";
 
     // Populate question.
     questionH3.innerHTML = question;
@@ -118,6 +157,7 @@ function startQuiz() {
       var answerBtn = document.createElement("button");
       answersContainer.appendChild(answerBtn);
       answerBtn.innerHTML = answers[i];
+      answerBtn.classList.add("monospace");
       answerBtn.addEventListener("click", checkAnswer);
       //Add marker to correct answer.
       if (i == correctAnswer) {
@@ -127,36 +167,47 @@ function startQuiz() {
   }
 
   function checkAnswer(e) {
-    if (
-      e.target.hasAttribute("data-correct") ||
-      e.target.parentElement.hasAttribute("data-correct")
-    ) {
+    // Display feedback, add points, subtract time.
+    if (e.target.hasAttribute("data-correct")) {
+      e.target.style.backgroundColor = "palegreen";
+      score.style.color = "green";
       points += 10;
-      alert("correct");
     } else {
-      alert("incorrect");
+      e.target.style.backgroundColor = "lightcoral";
+      timer.style.color = "red";
+      time -= 10;
     }
     // Queue up next question.
     currentQuestion++;
-    populateQuiz();
+    setTimeout(() => {
+      populateQuiz();
+    }, 400)
   }
 
   function clearQuiz() {
+    score.innerHTML = "";
     timer.innerHTML = "";
     questionH3.innerHTML = "";
     questionNumberH3.innerHTML = "";
     questionTypeImg.removeAttribute("src");
     answersContainer.replaceChildren();
-    if (time < 0) landing.style.display = "block";
+    if (time < 0) {
+      landing.style.display = "block";
+      questionContainer.classList.replace("flex", "hide");
+      answersContainer.classList.replace("flex", "hide");
+    }
   }
+
+  function showHighscore(currentScore) {}
 
   startTimer();
   populateQuiz();
 }
 
 function showScoreboard() {
-  console.log("show scoreboard");
+  scoreboardContainer.classList.replace("hide", "flex");
 }
 
 startBtn.addEventListener("click", startQuiz);
 scoreboardBtn.addEventListener("click", showScoreboard);
+

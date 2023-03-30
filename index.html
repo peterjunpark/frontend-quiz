@@ -6,27 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Fira+Sans:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 
 <body>
-    <header>
-        <span id="score"></span>
-        <button id="scoreboard-btn">View scoreboard</button>
-        <span id="timer"></span>
+    <header class="flex">
+        <span id="score" class="monospace"></span>
+        <span id="timer" class="monospace"></span>
     </header>
-    <main>
-        <section id="landing">
+    <main class="flex">
+        <section id="landing" class="flex">
             <h1>Front-End Web Dev Quiz For Noobs</h1>
-            <h2>Test your understanding of HTML, CSS, JavaScript, Web APIs, and more!</h2>
+            <h2>Test your understanding of essential front-end web development technologies!</h2>
             <button id="start-btn">Start</button>
+            <span id="highscore"></span>
+            <button id="scoreboard-btn">View scoreboard</button>
         </section>
-        <section id="question-container">
-            <img id="question-type">
-            <h3 id="question-number"></h3>
+        <section id="question-container" class="side hide">
+            <div class="flex">
+                <img id="question-type">
+                <h3 id="question-number"></h3>
+            </div>
             <h3 id="question"></h3>
         </section>
-        <section id="answers-container"></section>
+        <section id="answers-container" class="side hide"></section>
+        <section id="scoreboard-container" class="hide">
+            <h4>High scores</h4>
+        </section>
     </main>
     <script src="./assets/script.js"></script>
 </body>
