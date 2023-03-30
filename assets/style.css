@@ -1,3 +1,5 @@
+/* Global & Utilities */
+
 * {
     font-family: 'Fira Sans', sans-serif;
     border-style: none;
@@ -7,32 +9,12 @@
     display: flex;
 }
 
-.hide{
+.hide {
     display: none;
-}
-
-button {
-    padding: 1em;
-    margin: 5px;
-    font-size: 1em;
-    border: 0.5px solid black;
 }
 
 .monospace {
     font-family: 'Fira Code', monospace;
-}
-
-
-img {
-    padding-right: 32px;
-    border-right: 1px solid black;
-    width: 50px;
-}
-
-header {
-    justify-content: space-around;
-    margin-bottom: 3em;
-    font-size: 1.1em;
 }
 
 main {
@@ -40,18 +22,54 @@ main {
     justify-content: space-around;
 }
 
-.side {
-    margin: 0.5em;
-    flex-direction: column;
+button,
+input[type="submit"],
+input[type="text"] {
+    padding: 1em;
+    margin: 5px;
+    font-size: 1em;
+    border: 0.5px solid black;
 }
 
-#landing {
+/* Landing page */
+
+h1 {
+    font-size: 3em;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0px;
+}
+
+#landing,
+#start-menu {
     flex-direction: column;
     text-align: center;
+    align-items: center;
 }
 
 #start-btn {
-    font-size: 4em;
+    font-size: 3em;
+}
+
+/* Quiz elements */
+
+header {
+    justify-content: space-around;
+    margin-bottom: 3em;
+    font-size: 1.1em;
+}
+
+img {
+    padding-right: 32px;
+    border-right: 1px solid black;
+    width: 50px;
+}
+
+.side {
+    margin: 0.5em;
+    flex-direction: column;
 }
 
 #question-container {
@@ -71,6 +89,34 @@ main {
     justify-content: flex-end;
 }
 
+/* Scoreboard */
+label {
+    font-size: 1.5em;
+}
+
+#score-form {
+    margin-top: 2em;
+}
+
+#scores-list {
+    font-size: 1.2em;
+}
+
+#score-menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#scoreboard-container {
+    flex-direction: column;
+}
+
+#scoreboard-container>ul {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 @media screen and (min-width: 768px) {
     header {
         margin-bottom: 4em;
@@ -86,5 +132,11 @@ main {
 
     #question-container {
         align-items: flex-start;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    main {
+        margin: auto 10em auto 10em;
     }
 }

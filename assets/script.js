@@ -35,16 +35,10 @@ var questionsList = [
     question:
       "Which attribute specifies descriptive text for an image used if the image cannot be displayed?",
     category: "html",
-    answers: [
-      "alt",
-      "href",
-      "id",
-      "name",
-    ],
+    answers: ["alt", "href", "id", "name"],
   },
   {
-    question:
-      "Which of the following symbols represents strict equality?",
+    question: "Which of the following symbols represents strict equality?",
     category: "js",
     answers: ["===", "==", "="],
   },
@@ -74,18 +68,19 @@ var questionsList = [
   {
     question: "What command lets you see a repository's commit history?",
     category: "git",
-    answers: [
-      "git log",
-      "git history",
-      "git branch",
-      "git status",
-    ],
+    answers: ["git log", "git history", "git branch", "git status"],
   },
 ];
 var landing = document.querySelector("#landing");
+var startMenu = document.querySelector("#start-menu");
 var startBtn = document.querySelector("#start-btn");
 var scoreboardBtn = document.querySelector("#scoreboard-btn");
 var score = document.querySelector("#score");
+var scoreForm = document.querySelector("#score-form");
+var scoresList = document.querySelector("#scores-list");
+var endScore = document.querySelector("#save-score");
+var initialsField = document.querySelector("#initials");
+var playAgainBtn = document.querySelector("#play-again");
 var timer = document.querySelector("#timer");
 var questionH3 = document.querySelector("#question");
 var questionNumberH3 = document.querySelector("#question-number");
@@ -93,6 +88,7 @@ var questionTypeImg = document.querySelector("#question-type");
 var questionContainer = document.querySelector("#question-container");
 var answersContainer = document.querySelector("#answers-container");
 var scoreboardContainer = document.querySelector("#scoreboard-container");
+var highscores = JSON.parse(localStorage.getItem("scoreHistory"));
 
 // Utility to shuffle order of arrays. Use to shuffle questionsList array and answers array.
 function shuffle(array) {
@@ -110,11 +106,44 @@ function shuffle(array) {
   return correctI;
 }
 
+function updateScores() {
+  if (!highscores) {
+    // Change null to empty array so push method works.
+    highscores = [];
+    var noScores = document.createElement("li");
+    noScores.setAttribute("class", "monospace");
+    noScores.innerHTML = "No highscores";
+    scoresList.appendChild(noScores);
+  } else {
+    for (i in highscores) {
+      var scoreItem = document.createElement("li");
+      scoreItem.setAttribute("class", "monospace");
+      scoreItem.innerHTML = `${highscores[i].initials} | ${highscores[i].score} points`;
+      scoresList.appendChild(scoreItem);
+    }
+  }
+}
+
+function showScoreboard() {
+  landing.style.display = "block";
+  questionContainer.classList.replace("flex", "hide");
+  answersContainer.classList.replace("flex", "hide");
+  scoreboardContainer.classList.replace("hide", "flex");
+  startMenu.classList.replace("flex", "hide");
+
+  playAgainBtn.addEventListener("click", showLanding);
+}
+
+function showLanding() {
+  scoreboardContainer.classList.replace("flex", "hide");
+  startMenu.classList.replace("hide", "flex");
+}
+
 function startQuiz() {
   var currentQuestion = 0;
   var correctAnswer = 0;
   var points = 0;
-  var time = 60;
+  var time = 5;
 
   landing.style.display = "none";
   questionContainer.classList.replace("hide", "flex");
@@ -169,7 +198,7 @@ function startQuiz() {
   function checkAnswer(e) {
     // Display feedback, add points, subtract time.
     if (e.target.hasAttribute("data-correct")) {
-      e.target.style.backgroundColor = "palegreen";
+      e.target.style.backgroundColor = "lightgreen";
       score.style.color = "green";
       points += 10;
     } else {
@@ -178,10 +207,15 @@ function startQuiz() {
       time -= 10;
     }
     // Queue up next question.
-    currentQuestion++;
-    setTimeout(() => {
-      populateQuiz();
-    }, 400)
+    if (currentQuestion !== questionsList.length - 1) {
+      currentQuestion++;
+      setTimeout(() => {
+        populateQuiz();
+      }, 400);
+    } else {
+      saveScore();
+      endScore.innerHTML = `You answered every question! You scored ${points} points.`
+    }
   }
 
   function clearQuiz() {
@@ -191,23 +225,37 @@ function startQuiz() {
     questionNumberH3.innerHTML = "";
     questionTypeImg.removeAttribute("src");
     answersContainer.replaceChildren();
-    if (time < 0) {
-      landing.style.display = "block";
-      questionContainer.classList.replace("flex", "hide");
-      answersContainer.classList.replace("flex", "hide");
-    }
+
+    if (time < 0) saveScore();
   }
 
-  function showHighscore(currentScore) {}
+  function saveScore() {
+    showScoreboard();
+    scoreForm.classList.remove("hide");
+    endScore.innerHTML = `You scored ${points} points.`;
+  }
+
+  scoreForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Add score to scoreboard.
+    var initials = initialsField.value.toUpperCase().trim();
+    var newScore = document.createElement("li");
+    newScore.setAttribute("class", "monospace");
+    newScore.innerHTML = `${initials} | ${points} points`;
+    scoresList.appendChild(newScore);
+    scoreForm.classList.add("hide");
+
+    // Add score to localStorage.
+    highscores.push({ initials: initials, score: points });
+    localStorage.setItem("scoreHistory", JSON.stringify(highscores));
+  });
 
   startTimer();
   populateQuiz();
 }
 
-function showScoreboard() {
-  scoreboardContainer.classList.replace("hide", "flex");
-}
+updateScores();
 
 startBtn.addEventListener("click", startQuiz);
 scoreboardBtn.addEventListener("click", showScoreboard);
-

@@ -21,11 +21,28 @@
     </header>
     <main class="flex">
         <section id="landing" class="flex">
-            <h1>Front-End Web Dev Quiz For Noobs</h1>
-            <h2>Test your understanding of essential front-end web development technologies!</h2>
-            <button id="start-btn">Start</button>
-            <span id="highscore"></span>
-            <button id="scoreboard-btn">View scoreboard</button>
+            <h1>Are you a front-end noob?</h1>
+            <div id="start-menu" class="flex">
+                <h2>Test your understanding of essential front-end web development technologies!</h2>
+                <ul>
+                    <li>You have 90 seconds on the clock. Wrong answers deduct 10 seconds.</li>
+                    <li>Correct answers earn you 10 points. Track your scores and compare with your friends!</li>
+                </ul>
+                <button id="start-btn">Let's go!</button>
+
+                <button id="scoreboard-btn">View scoreboard</button>
+
+            </div>
+            <section id="scoreboard-container" class="hide">
+                <button id="play-again">Return to start</button>
+                <form id="score-form" class="hide">
+                    <label for="initials" id="save-score"></label>
+                    <br>
+                    <input type="text" id="initials">
+                    <input type="submit" value="Save score" id="save-score-btn">
+                </form>
+                <ul id="scores-list"></ul>
+            </section>
         </section>
         <section id="question-container" class="side hide">
             <div class="flex">
@@ -35,9 +52,6 @@
             <h3 id="question"></h3>
         </section>
         <section id="answers-container" class="side hide"></section>
-        <section id="scoreboard-container" class="hide">
-            <h4>High scores</h4>
-        </section>
     </main>
     <script src="./assets/script.js"></script>
 </body>
