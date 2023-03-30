@@ -79,22 +79,20 @@ function startQuiz() {
   var currentQuestion = 0;
   var correctAnswer = 0;
   var points = 0;
+  var time = 60;
 
-  // Remove homepage.
   landing.style.display = "none";
 
   shuffle(questionsList);
 
   function startTimer() {
-    var time = 5;
-
     var timerInterval = setInterval(() => {
       timer.innerHTML = time.toFixed(2);
       time -= 0.01;
 
       if (time < 0) {
         clearInterval(timerInterval);
-        //todo: Stop the quiz!
+        clearQuiz();
       }
     })
   }
@@ -103,6 +101,9 @@ function startQuiz() {
     var question = questionsList[currentQuestion].question;
     var questionType = questionsList[currentQuestion].category;
     var answers = questionsList[currentQuestion].answers;
+
+    clearQuiz();
+    score.innerHTML = points;
 
     // Populate question.
     questionH3.innerHTML = question;
@@ -137,6 +138,16 @@ function startQuiz() {
     }
     // Queue up next question.
     currentQuestion++;
+    populateQuiz();
+  }
+
+  function clearQuiz() {
+    timer.innerHTML = "";
+    questionH3.innerHTML = "";
+    questionNumberH3.innerHTML = "";
+    questionTypeImg.removeAttribute("src");
+    answersContainer.replaceChildren();
+    if (time < 0) landing.style.display = "block";
   }
 
   startTimer();
