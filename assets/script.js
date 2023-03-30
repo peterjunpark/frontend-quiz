@@ -51,7 +51,9 @@ var questionsList = [
 
 var landing = document.querySelector("#landing");
 var startBtn = document.querySelector("#start-btn");
+var score = document.querySelector("#score");
 var scoreboardBtn = document.querySelector("#scoreboard-btn");
+var timer = document.querySelector("#timer");
 var questionH3 = document.querySelector("#question");
 var questionNumberH3 = document.querySelector("#question-number");
 var questionTypeImg = document.querySelector("#question-type");
@@ -82,6 +84,20 @@ function startQuiz() {
   landing.style.display = "none";
 
   shuffle(questionsList);
+
+  function startTimer() {
+    var time = 5;
+
+    var timerInterval = setInterval(() => {
+      timer.innerHTML = time.toFixed(2);
+      time -= 0.01;
+
+      if (time < 0) {
+        clearInterval(timerInterval);
+        //todo: Stop the quiz!
+      }
+    })
+  }
 
   function populateQuiz() {
     var question = questionsList[currentQuestion].question;
@@ -117,11 +133,13 @@ function startQuiz() {
       points += 10;
       alert("correct");
     } else {
-
       alert("incorrect");
     }
+    // Queue up next question.
+    currentQuestion++;
   }
 
+  startTimer();
   populateQuiz();
 }
 
