@@ -84,42 +84,18 @@ function startQuiz() {
     {
       question: "Which of these is a class selector?",
       category: "css",
-      answers: [
-        ".container",
-        "#container",
-        "container",
-        "(container)",
-      ],
+      answers: [".container", "#container", "container", "(container)"],
     },
     {
-      question: "Which of the following is not a relative length unit used in styling?",
+      question:
+        "Which of the following is not a relative length unit used in styling?",
       category: "css",
-      answers: [
-        "in",
-        "vh",
-        "rem",
-        "rem",
-      ],
+      answers: ["in", "vh", "rem", "rem"],
     },
     {
       question: "Which of the following is an example of a pseudo-element?",
       category: "css",
-      answers: [
-        "::before",
-        ":before",
-        "[before]",
-        ">before",
-      ],
-    },
-    {
-      question: "What element do you use to refer to a CSS stylesheet in an HTML document?",
-      category: "css",
-      answers: [
-        "<link>",
-        "<script>",
-        "<a>",
-        "<src>",
-      ],
+      answers: ["::before", ":before", "[before]", ">before"],
     },
     {
       question:
@@ -133,6 +109,23 @@ function startQuiz() {
       ],
     },
     {
+      question:
+        "Which property should you use to align items along a flexbox's main axis?",
+      category: "css",
+      answers: [
+        "justify-content",
+        "align-items",
+        "align-content",
+        "text-align",
+      ],
+    },
+    {
+      question:
+        "Which of these is an example of calling a variable in a stylesheet?",
+      category: "css",
+      answers: ["var(--style)", "var.style", "var.style", "style()"],
+    },
+    {
       question: "What attribute should you use to open a link in a new tab?",
       category: "html",
       answers: [
@@ -143,20 +136,15 @@ function startQuiz() {
       ],
     },
     {
-      question: "Which of these tags should you not place in the <body> section of your document?",
-      category: "html",
-      answers: [
-        '<meta>',
-        '<a>',
-        '<header>',
-        '<script>',
-      ],
-    },
-    {
       question:
         "Which attribute specifies descriptive text for an image used if the image cannot be displayed?",
       category: "html",
       answers: ["alt", "href", "id", "name"],
+    },
+    {
+      question: "HTML is often used to add interactivity to a webpage.",
+      category: "html",
+      answers: ["False", "True"],
     },
     {
       question: "Which of the following symbols represents strict equality?",
@@ -181,9 +169,27 @@ function startQuiz() {
       answers: ["object", "bigint", "boolean", "undefined"],
     },
     {
-      question: "Are function expressions hoisted?",
+      question: "Which of the following is not a primitive type?",
       category: "js",
-      answers: ["false", "true", "sometimes"],
+      answers: ["object", "bigint", "boolean", "undefined"],
+    },
+    {
+      question: 'What can the "this" keyword do?',
+      category: "js",
+      answers: [
+        "Refer to an object from where it is called",
+        "Refer to a function from inside the function",
+      ],
+    },
+    {
+      question: "Which of the following is not a valid looping structure?",
+      category: "js",
+      answers: [
+        "if",
+        "for",
+        "while",
+        "do while",
+      ],
     },
     {
       question: 'What does "1" + 1 evaluate to?',
