@@ -8,6 +8,7 @@ var scoresList = document.querySelector("#scores-list");
 var endScore = document.querySelector("#save-score");
 var initialsField = document.querySelector("#initials");
 var playAgainBtn = document.querySelector("#play-again");
+var clearScoresBtn = document.querySelector("#clear-score");
 var timer = document.querySelector("#timer");
 var questionH3 = document.querySelector("#question");
 var questionNumberH3 = document.querySelector("#question-number");
@@ -33,18 +34,30 @@ function shuffle(array) {
   return correctI;
 }
 
+function saveToLocal () {
+  localStorage.setItem("scoreHistory", JSON.stringify(highscores));
+  scoreForm.classList.add("hide");
+}
+
 function updateScores() {
-  if (JSON.parse(localStorage.getItem("scoreHistory"))) {
-    highscores = JSON.parse(localStorage.getItem("scoreHistory"));
+  if (JSON.parse(localStorage.getItem("scoreHistory")) == null) {
+    var noScore = document.createElement("li");
+    noScore.setAttribute("class", "monospace");
+    noScore.innerHTML = "No highscores";
+    clearScoresBtn.classList.add("hide");
+  } else {
+
   }
 
 
+  highscores = JSON.parse(localStorage.getItem("scoreHistory"));
   for (i in highscores) {
     var scoreItem = document.createElement("li");
     scoreItem.setAttribute("class", "monospace");
     scoreItem.innerHTML = `${highscores[i].initials} | ${highscores[i].score} points`;
     scoresList.appendChild(scoreItem);
   }
+
 }
 
 function showScoreboard() {
@@ -56,12 +69,16 @@ function showScoreboard() {
   scoresList.replaceChildren();
   updateScores();
 
-  playAgainBtn.addEventListener("click", showLanding);
-}
+  playAgainBtn.addEventListener("click", () => {
+    scoreboardContainer.classList.replace("flex", "hide");
+    startMenu.classList.replace("hide", "flex");
+  });
 
-function showLanding() {
-  scoreboardContainer.classList.replace("flex", "hide");
-  startMenu.classList.replace("hide", "flex");
+  clearScoresBtn.addEventListener("click", () => {
+    highscores = [];
+    scoresList.replaceChildren();
+    saveToLocal();
+  })
 }
 
 function startQuiz() {
@@ -168,6 +185,7 @@ function startQuiz() {
     var answers = questionsList[currentQuestion].answers;
 
     clearQuiz();
+
     score.innerHTML = "Score: " + points;
     score.style.color = "";
     timer.style.color = "";
@@ -248,10 +266,8 @@ function startQuiz() {
 
     // Add score to localStorage.
     highscores.push(scoreData);
-    localStorage.setItem("scoreHistory", JSON.stringify(highscores));
-
-    scoreForm.classList.add("hide");
-    showLanding();
+    saveToLocal();
+    location.reload();
   });
 
   startTimer();
