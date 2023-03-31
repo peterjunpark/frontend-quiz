@@ -26,7 +26,7 @@ Scoreboard:
 ![image](https://user-images.githubusercontent.com/115042610/229016231-4cb4e89b-7a88-45da-b369-c6f59cc05b50.png)
 
 ## Usage
-To access the web app, go to [https://qkr0wns.github.io/password-generator/](https://qkr0wns.github.io/frontend-quiz/).
+To access the web app, go to [https://qkr0wns.github.io/frontend-quiz/](https://qkr0wns.github.io/frontend-quiz/).
 
 ### In the main menu:
 - Click *Let's go!* to start the game.
