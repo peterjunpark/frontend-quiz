@@ -34,7 +34,7 @@ function shuffle(array) {
   return correctI;
 }
 
-function saveToLocal () {
+function saveToLocal() {
   localStorage.setItem("scoreHistory", JSON.stringify(highscores));
   scoreForm.classList.add("hide");
 }
@@ -46,9 +46,7 @@ function updateScores() {
     noScore.innerHTML = "No highscores";
     clearScoresBtn.classList.add("hide");
   } else {
-
   }
-
 
   highscores = JSON.parse(localStorage.getItem("scoreHistory"));
   for (i in highscores) {
@@ -57,7 +55,6 @@ function updateScores() {
     scoreItem.innerHTML = `${highscores[i].initials} | ${highscores[i].score} points`;
     scoresList.appendChild(scoreItem);
   }
-
 }
 
 function showScoreboard() {
@@ -78,7 +75,7 @@ function showScoreboard() {
     highscores = [];
     scoresList.replaceChildren();
     saveToLocal();
-  })
+  });
 }
 
 function startQuiz() {
@@ -90,8 +87,38 @@ function startQuiz() {
       answers: [
         ".container",
         "#container",
-        "container</code>",
-        "(container)</code>",
+        "container",
+        "(container)",
+      ],
+    },
+    {
+      question: "Which of the following is not a relative length unit used in styling?",
+      category: "css",
+      answers: [
+        "in",
+        "vh",
+        "rem",
+        "rem",
+      ],
+    },
+    {
+      question: "Which of the following is an example of a pseudo-element?",
+      category: "css",
+      answers: [
+        "::before",
+        ":before",
+        "[before]",
+        ">before",
+      ],
+    },
+    {
+      question: "What element do you use to refer to a CSS stylesheet in an HTML document?",
+      category: "css",
+      answers: [
+        "<link>",
+        "<script>",
+        "<a>",
+        "<src>",
       ],
     },
     {
@@ -116,6 +143,16 @@ function startQuiz() {
       ],
     },
     {
+      question: "Which of these tags should you not place in the <body> section of your document?",
+      category: "html",
+      answers: [
+        '<meta>',
+        '<a>',
+        '<header>',
+        '<script>',
+      ],
+    },
+    {
       question:
         "Which attribute specifies descriptive text for an image used if the image cannot be displayed?",
       category: "html",
@@ -134,9 +171,34 @@ function startQuiz() {
     },
     {
       question:
-        "The document method <code>querySelectorAll()</code> returns a value of which type?",
+        "The document method querySelectorAll() returns a value of which type?",
       category: "js",
       answers: ["array", "string", "number", "boolean"],
+    },
+    {
+      question: "Which of the following is not a primitive type?",
+      category: "js",
+      answers: ["object", "bigint", "boolean", "undefined"],
+    },
+    {
+      question: "Are function expressions hoisted?",
+      category: "js",
+      answers: ["false", "true", "sometimes"],
+    },
+    {
+      question: 'What does "1" + 1 evaluate to?',
+      category: "js",
+      answers: ['"11"', "11", "2", '"2"'],
+    },
+    {
+      question: "What does the [].push() method do?",
+      category: "js",
+      answers: [
+        "Adds an element to the end of the array",
+        "Removes the last element of the array",
+        "Adds an element to the start of the array",
+        "Removes the first element of the array",
+      ],
     },
     {
       question:
@@ -232,7 +294,6 @@ function startQuiz() {
     } else {
       clearQuiz();
       saveScore();
-      endScore.innerHTML = `You answered every question! You scored ${points} points.`;
     }
   }
 
@@ -261,8 +322,8 @@ function startQuiz() {
     var name = initialsField.value.toUpperCase().trim();
     var scoreData = {
       initials: name,
-      score: points
-    }
+      score: points,
+    };
 
     // Add score to localStorage.
     highscores.push(scoreData);
