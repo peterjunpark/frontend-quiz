@@ -1,76 +1,3 @@
-var questionsList = [
-  // ! Correct answer must be at index of 0.
-  {
-    question: "Which of these is a class selector?",
-    category: "css",
-    answers: [
-      ".container",
-      "#container",
-      "container</code>",
-      "(container)</code>",
-    ],
-  },
-  {
-    question:
-      "What are the parts of the box model from innermost to outermost?",
-    category: "css",
-    answers: [
-      "content, padding, border, margin",
-      "content, margin, border, padding",
-      "content, padding, margin, border",
-      "content, border, padding, margin",
-    ],
-  },
-  {
-    question: "What attribute should you use to open a link in a new tab?",
-    category: "html",
-    answers: [
-      'target="_blank"',
-      'target="blank_"',
-      'target="_tab"',
-      'target="new-tab"',
-    ],
-  },
-  {
-    question:
-      "Which attribute specifies descriptive text for an image used if the image cannot be displayed?",
-    category: "html",
-    answers: ["alt", "href", "id", "name"],
-  },
-  {
-    question: "Which of the following symbols represents strict equality?",
-    category: "js",
-    answers: ["===", "==", "="],
-  },
-  {
-    question:
-      "The Document Object Model is a web API baked into modern browsers that represents the structure of an HTML document as a tree?",
-    category: "js",
-    answers: ["True", "False"],
-  },
-  {
-    question:
-      "The document method <code>querySelectorAll()</code> returns a value of which type?",
-    category: "js",
-    answers: ["array", "string", "number", "boolean"],
-  },
-  {
-    question:
-      "What command can you use to switch to another branch (and create it if it doesn't exist)?",
-    category: "git",
-    answers: [
-      'git checkout -b "..."',
-      'git add -b "..."',
-      '<code>git branch -c "..."',
-      '<code>git new -b "..."',
-    ],
-  },
-  {
-    question: "What command lets you see a repository's commit history?",
-    category: "git",
-    answers: ["git log", "git history", "git branch", "git status"],
-  },
-];
 var landing = document.querySelector("#landing");
 var startMenu = document.querySelector("#start-menu");
 var startBtn = document.querySelector("#start-btn");
@@ -88,7 +15,7 @@ var questionTypeImg = document.querySelector("#question-type");
 var questionContainer = document.querySelector("#question-container");
 var answersContainer = document.querySelector("#answers-container");
 var scoreboardContainer = document.querySelector("#scoreboard-container");
-var highscores = JSON.parse(localStorage.getItem("scoreHistory"));
+var highscores = [];
 
 // Utility to shuffle order of arrays. Use to shuffle questionsList array and answers array.
 function shuffle(array) {
@@ -107,20 +34,16 @@ function shuffle(array) {
 }
 
 function updateScores() {
-  if (!highscores) {
-    // Change null to empty array so push method works.
-    highscores = [];
-    var noScores = document.createElement("li");
-    noScores.setAttribute("class", "monospace");
-    noScores.innerHTML = "No highscores";
-    scoresList.appendChild(noScores);
-  } else {
-    for (i in highscores) {
-      var scoreItem = document.createElement("li");
-      scoreItem.setAttribute("class", "monospace");
-      scoreItem.innerHTML = `${highscores[i].initials} | ${highscores[i].score} points`;
-      scoresList.appendChild(scoreItem);
-    }
+  if (JSON.parse(localStorage.getItem("scoreHistory"))) {
+    highscores = JSON.parse(localStorage.getItem("scoreHistory"));
+  }
+
+
+  for (i in highscores) {
+    var scoreItem = document.createElement("li");
+    scoreItem.setAttribute("class", "monospace");
+    scoreItem.innerHTML = `${highscores[i].initials} | ${highscores[i].score} points`;
+    scoresList.appendChild(scoreItem);
   }
 }
 
@@ -130,6 +53,8 @@ function showScoreboard() {
   answersContainer.classList.replace("flex", "hide");
   scoreboardContainer.classList.replace("hide", "flex");
   startMenu.classList.replace("flex", "hide");
+  scoresList.replaceChildren();
+  updateScores();
 
   playAgainBtn.addEventListener("click", showLanding);
 }
@@ -140,10 +65,84 @@ function showLanding() {
 }
 
 function startQuiz() {
+  var questionsList = [
+    // ! Correct answer must be at index of 0.
+    {
+      question: "Which of these is a class selector?",
+      category: "css",
+      answers: [
+        ".container",
+        "#container",
+        "container</code>",
+        "(container)</code>",
+      ],
+    },
+    {
+      question:
+        "What are the parts of the box model from innermost to outermost?",
+      category: "css",
+      answers: [
+        "content, padding, border, margin",
+        "content, margin, border, padding",
+        "content, padding, margin, border",
+        "content, border, padding, margin",
+      ],
+    },
+    {
+      question: "What attribute should you use to open a link in a new tab?",
+      category: "html",
+      answers: [
+        'target="_blank"',
+        'target="blank_"',
+        'target="_tab"',
+        'target="new-tab"',
+      ],
+    },
+    {
+      question:
+        "Which attribute specifies descriptive text for an image used if the image cannot be displayed?",
+      category: "html",
+      answers: ["alt", "href", "id", "name"],
+    },
+    {
+      question: "Which of the following symbols represents strict equality?",
+      category: "js",
+      answers: ["===", "==", "="],
+    },
+    {
+      question:
+        "The Document Object Model is a web API baked into modern browsers that represents the structure of an HTML document as a tree?",
+      category: "js",
+      answers: ["True", "False"],
+    },
+    {
+      question:
+        "The document method <code>querySelectorAll()</code> returns a value of which type?",
+      category: "js",
+      answers: ["array", "string", "number", "boolean"],
+    },
+    {
+      question:
+        "What command can you use to switch to another branch (and create it if it doesn't exist)?",
+      category: "git",
+      answers: [
+        'git checkout -b "..."',
+        'git add -b "..."',
+        'git branch -c "..."',
+        'git new -b "..."',
+      ],
+    },
+    {
+      question: "What command lets you see a repository's commit history?",
+      category: "git",
+      answers: ["git log", "git history", "git branch", "git status"],
+    },
+  ];
+
   var currentQuestion = 0;
   var correctAnswer = 0;
   var points = 0;
-  var time = 5;
+  var time = 90;
 
   landing.style.display = "none";
   questionContainer.classList.replace("hide", "flex");
@@ -213,8 +212,9 @@ function startQuiz() {
         populateQuiz();
       }, 400);
     } else {
+      clearQuiz();
       saveScore();
-      endScore.innerHTML = `You answered every question! You scored ${points} points.`
+      endScore.innerHTML = `You answered every question! You scored ${points} points.`;
     }
   }
 
@@ -230,6 +230,7 @@ function startQuiz() {
   }
 
   function saveScore() {
+    time = 0;
     showScoreboard();
     scoreForm.classList.remove("hide");
     endScore.innerHTML = `You scored ${points} points.`;
@@ -239,23 +240,23 @@ function startQuiz() {
     e.preventDefault();
 
     // Add score to scoreboard.
-    var initials = initialsField.value.toUpperCase().trim();
-    var newScore = document.createElement("li");
-    newScore.setAttribute("class", "monospace");
-    newScore.innerHTML = `${initials} | ${points} points`;
-    scoresList.appendChild(newScore);
-    scoreForm.classList.add("hide");
+    var name = initialsField.value.toUpperCase().trim();
+    var scoreData = {
+      initials: name,
+      score: points
+    }
 
     // Add score to localStorage.
-    highscores.push({ initials: initials, score: points });
+    highscores.push(scoreData);
     localStorage.setItem("scoreHistory", JSON.stringify(highscores));
+
+    scoreForm.classList.add("hide");
+    showLanding();
   });
 
   startTimer();
   populateQuiz();
 }
-
-updateScores();
 
 startBtn.addEventListener("click", startQuiz);
 scoreboardBtn.addEventListener("click", showScoreboard);
