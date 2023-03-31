@@ -23,7 +23,7 @@ Game state:
 
 Scoreboard:
 
-![image](https://user-images.githubusercontent.com/115042610/229007950-3cd3e744-ba7e-4530-8bc3-6c2ff6d10126.png)
+![image](https://user-images.githubusercontent.com/115042610/229016231-4cb4e89b-7a88-45da-b369-c6f59cc05b50.png)
 
 ## Usage
 To access the web app, go to [https://qkr0wns.github.io/password-generator/](https://qkr0wns.github.io/frontend-quiz/).
@@ -40,6 +40,7 @@ To access the web app, go to [https://qkr0wns.github.io/password-generator/](htt
 ### In the scoreboard:
 - Click *Return to start* to go back to the home page.
 - Click *Save score* to put your score into local storage for future recall.
+- Click *Clear scores* to clear the page and local storage of all scores.
 
 
 To see the code, inspect the webpage in your browser and open the debugger. Alternatively, view script.js directly in GitHub, or clone the repository to view them in the code editor of your choice.
