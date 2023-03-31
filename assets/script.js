@@ -41,13 +41,8 @@ function saveToLocal() {
 
 // Populate scoreboard
 function updateScores() {
-  if (JSON.parse(localStorage.getItem("scoreHistory")) == null) {
-    var noScore = document.createElement("li");
-    noScore.setAttribute("class", "monospace");
-    noScore.innerHTML = "No highscores";
-    clearScoresBtn.classList.add("hide");
-  } else {
-  }
+  if (JSON.parse(localStorage.getItem("scoreHistory")))  {
+
 
   highscores = JSON.parse(localStorage.getItem("scoreHistory"));
   for (i in highscores) {
@@ -56,6 +51,7 @@ function updateScores() {
     scoreItem.innerHTML = `${highscores[i].initials} | ${highscores[i].score} points`;
     scoresList.appendChild(scoreItem);
   }
+}
 }
 
 function showScoreboard() {
