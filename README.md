@@ -14,12 +14,15 @@ A quiz game made using JavaScript to:
 ### The application:
 
 Home page:
+
 ![image](https://user-images.githubusercontent.com/115042610/229008044-94706981-a34f-4488-984b-46a8a22391cf.png)
 
 Game state:
-![image](https://user-images.githubusercontent.com/115042610/227355681-012eb4d6-0c37-4bd8-bf2d-5463df94980d.png)
+
+![image](https://user-images.githubusercontent.com/115042610/229009004-2b3f4648-6137-4018-85af-934be63af31b.png)
 
 Scoreboard:
+
 ![image](https://user-images.githubusercontent.com/115042610/229007950-3cd3e744-ba7e-4530-8bc3-6c2ff6d10126.png)
 
 ## Usage
@@ -34,7 +37,7 @@ To access the web app, go to [https://qkr0wns.github.io/password-generator/](htt
 - If your chosen answer was correct, the answer and your current score flash green for 400ms.
 - If your chosen answer was incorrect, the answer and the timer flash red for 400ms.
 
-## In the scoreboard:
+### In the scoreboard:
 - Click *Return to start* to go back to the home page.
 - Click *Save score* to put your score into local storage for future recall.
 
