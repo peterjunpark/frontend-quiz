@@ -39,6 +39,7 @@ function saveToLocal() {
   scoreForm.classList.add("hide");
 }
 
+// Populate scoreboard
 function updateScores() {
   if (JSON.parse(localStorage.getItem("scoreHistory")) == null) {
     var noScore = document.createElement("li");
