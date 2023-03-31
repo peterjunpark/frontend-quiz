@@ -8,6 +8,7 @@ var scoresList = document.querySelector("#scores-list");
 var endScore = document.querySelector("#save-score");
 var initialsField = document.querySelector("#initials");
 var playAgainBtn = document.querySelector("#play-again");
+var clearScoresBtn = document.querySelector("#clear-score");
 var timer = document.querySelector("#timer");
 var questionH3 = document.querySelector("#question");
 var questionNumberH3 = document.querySelector("#question-number");
@@ -33,12 +34,21 @@ function shuffle(array) {
   return correctI;
 }
 
+function saveToLocal() {
+  localStorage.setItem("scoreHistory", JSON.stringify(highscores));
+  scoreForm.classList.add("hide");
+}
+
 function updateScores() {
-  if (JSON.parse(localStorage.getItem("scoreHistory"))) {
-    highscores = JSON.parse(localStorage.getItem("scoreHistory"));
+  if (JSON.parse(localStorage.getItem("scoreHistory")) == null) {
+    var noScore = document.createElement("li");
+    noScore.setAttribute("class", "monospace");
+    noScore.innerHTML = "No highscores";
+    clearScoresBtn.classList.add("hide");
+  } else {
   }
 
-
+  highscores = JSON.parse(localStorage.getItem("scoreHistory"));
   for (i in highscores) {
     var scoreItem = document.createElement("li");
     scoreItem.setAttribute("class", "monospace");
@@ -56,12 +66,16 @@ function showScoreboard() {
   scoresList.replaceChildren();
   updateScores();
 
-  playAgainBtn.addEventListener("click", showLanding);
-}
+  playAgainBtn.addEventListener("click", () => {
+    scoreboardContainer.classList.replace("flex", "hide");
+    startMenu.classList.replace("hide", "flex");
+  });
 
-function showLanding() {
-  scoreboardContainer.classList.replace("flex", "hide");
-  startMenu.classList.replace("hide", "flex");
+  clearScoresBtn.addEventListener("click", () => {
+    highscores = [];
+    scoresList.replaceChildren();
+    saveToLocal();
+  });
 }
 
 function startQuiz() {
@@ -70,12 +84,18 @@ function startQuiz() {
     {
       question: "Which of these is a class selector?",
       category: "css",
-      answers: [
-        ".container",
-        "#container",
-        "container</code>",
-        "(container)</code>",
-      ],
+      answers: [".container", "#container", "container", "(container)"],
+    },
+    {
+      question:
+        "Which of the following is not a relative length unit used in styling?",
+      category: "css",
+      answers: ["in", "vh", "rem", "rem"],
+    },
+    {
+      question: "Which of the following is an example of a pseudo-element?",
+      category: "css",
+      answers: ["::before", ":before", "[before]", ">before"],
     },
     {
       question:
@@ -87,6 +107,23 @@ function startQuiz() {
         "content, padding, margin, border",
         "content, border, padding, margin",
       ],
+    },
+    {
+      question:
+        "Which property should you use to align items along a flexbox's main axis?",
+      category: "css",
+      answers: [
+        "justify-content",
+        "align-items",
+        "align-content",
+        "text-align",
+      ],
+    },
+    {
+      question:
+        "Which of these is an example of calling a variable in a stylesheet?",
+      category: "css",
+      answers: ["var(--style)", "var.style", "var.style", "style()"],
     },
     {
       question: "What attribute should you use to open a link in a new tab?",
@@ -105,6 +142,11 @@ function startQuiz() {
       answers: ["alt", "href", "id", "name"],
     },
     {
+      question: "HTML is often used to add interactivity to a webpage.",
+      category: "html",
+      answers: ["False", "True"],
+    },
+    {
       question: "Which of the following symbols represents strict equality?",
       category: "js",
       answers: ["===", "==", "="],
@@ -117,9 +159,52 @@ function startQuiz() {
     },
     {
       question:
-        "The document method <code>querySelectorAll()</code> returns a value of which type?",
+        "The document method querySelectorAll() returns a value of which type?",
       category: "js",
       answers: ["array", "string", "number", "boolean"],
+    },
+    {
+      question: "Which of the following is not a primitive type?",
+      category: "js",
+      answers: ["object", "bigint", "boolean", "undefined"],
+    },
+    {
+      question: "Which of the following is not a primitive type?",
+      category: "js",
+      answers: ["object", "bigint", "boolean", "undefined"],
+    },
+    {
+      question: 'What can the "this" keyword do?',
+      category: "js",
+      answers: [
+        "Refer to an object from where it is called",
+        "Refer to a function from inside the function",
+      ],
+    },
+    {
+      question: "Which of the following is not a valid looping structure?",
+      category: "js",
+      answers: [
+        "if",
+        "for",
+        "while",
+        "do while",
+      ],
+    },
+    {
+      question: 'What does "1" + 1 evaluate to?',
+      category: "js",
+      answers: ['"11"', "11", "2", '"2"'],
+    },
+    {
+      question: "What does the [].push() method do?",
+      category: "js",
+      answers: [
+        "Adds an element to the end of the array",
+        "Removes the last element of the array",
+        "Adds an element to the start of the array",
+        "Removes the first element of the array",
+      ],
     },
     {
       question:
@@ -168,6 +253,7 @@ function startQuiz() {
     var answers = questionsList[currentQuestion].answers;
 
     clearQuiz();
+
     score.innerHTML = "Score: " + points;
     score.style.color = "";
     timer.style.color = "";
@@ -214,7 +300,6 @@ function startQuiz() {
     } else {
       clearQuiz();
       saveScore();
-      endScore.innerHTML = `You answered every question! You scored ${points} points.`;
     }
   }
 
@@ -243,15 +328,13 @@ function startQuiz() {
     var name = initialsField.value.toUpperCase().trim();
     var scoreData = {
       initials: name,
-      score: points
-    }
+      score: points,
+    };
 
     // Add score to localStorage.
     highscores.push(scoreData);
-    localStorage.setItem("scoreHistory", JSON.stringify(highscores));
-
-    scoreForm.classList.add("hide");
-    showLanding();
+    saveToLocal();
+    location.reload();
   });
 
   startTimer();
